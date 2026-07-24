@@ -54,7 +54,7 @@ th,td{
 <input type="number" id="cost">
 
 <button onclick="saveRecord()">သိမ်းမည်</button>
-
+<button onclick="clearRecords()">မှတ်တမ်းအားလုံးဖျက်</button>
 <div id="records"></div>
 </div>
 
@@ -107,7 +107,12 @@ document.getElementById("records").innerHTML=html;
 }
 
 showRecords();
-
+function clearRecords(){
+    if(confirm("မှတ်တမ်းအားလုံး ဖျက်မှာ သေချာပါသလား?")){
+        localStorage.removeItem("dailyRecord");
+        showRecords();
+    }
+    }
 </script>
 
 </body>
