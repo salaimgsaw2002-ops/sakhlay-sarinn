@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Record</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f2f2f2;
+    padding:20px;
+}
+.box{
+    background:white;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    border-radius:10px;
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+button{
+    background:#28a745;
+    color:white;
+    border:none;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+</style>
+
+</head>
+<body>
+
+<div class="box">
+<h2>📒 Daily Record</h2>
+
+<label>ဝင်ငွေ</label>
+<input type="number" id="income">
+
+<label>ကုန်ကျစရိတ်</label>
+<input type="number" id="cost">
+
+<button onclick="saveRecord()">သိမ်းမည်</button>
+
+<div id="records"></div>
+</div>
+
+<script>
+
+function saveRecord(){
+
+let income=document.getElementById("income").value;
+let cost=document.getElementById("cost").value;
+
+if(income=="" || cost==""){
+alert("အချက်အလက်ဖြည့်ပါ");
+return;
+}
+
+let data=JSON.parse(localStorage.getItem("dailyRecord")) || [];
+
+data.push({
+date:new Date().toLocaleDateString("en-CA"),
+income:income,
+cost:cost
+});
+
+localStorage.setItem("dailyRecord",JSON.stringify(data));
+
+showRecords();
+
+document.getElementById("income").value="";
+document.getElementById("cost").value="";
+}
+
+function showRecords(){
+
+let data=JSON.parse(localStorage.getItem("dailyRecord")) || [];
+
+let html="<table>";
+html+="<tr><th>နေ့</th><th>ဝင်ငွေ</th><th>ကုန်ကျ</th></tr>";
+
+data.forEach(function(r){
+html+="<tr>";
+html+="<td>"+r.date+"</td>";
+html+="<td>"+r.income+"</td>";
+html+="<td>"+r.cost+"</td>";
+html+="</tr>";
+});
+
+html+="</table>";
+
+document.getElementById("records").innerHTML=html;
+}
+
+showRecords();
+
+</script>
+
+</body>
+</html>
